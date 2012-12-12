@@ -1,0 +1,24 @@
+/*------------------------------------------------------------------------------
+ djv_config.h
+ 
+ Copyright (c) 2004-2012 Darby Johnston
+ All rights reserved.
+ Use is subject to license terms.
+------------------------------------------------------------------------------*/
+
+#ifndef DJV_CONFIG_H
+#define DJV_CONFIG_H
+
+// Software version.
+
+#define DJV_VERSION_NAME  "@djv_version_name@"
+#define DJV_VERSION_MAJOR "@djv_version_major@"
+#define DJV_VERSION_MINOR "@djv_version_minor@"
+#define DJV_VERSION_PATCH "@djv_version_patch@"
+
+// System.
+
+#define DJV_SYSTEM_NAME "@djv_system_name@"
+
+#endif
+

@@ -1,47 +1,32 @@
-set(
-  header
-  application.h
-  etc.h
-)
+set(header
+    djv_convert.h)
 
-set(
-  src
-  application.cxx
-  command_line.cxx
-  etc.cxx
-)
+set(source
+    djv_convert.cpp)
 
-include_directories(${djv_image_inc})
+include_directories(
+    ${CMAKE_SOURCE_DIR}/bin/djv_convert
+    ${djv_core_include_dirs})
 
-add_executable(
-  djv_convert
-  ${header}
-  ${src}
-)
+add_executable(djv_convert ${header} ${source})
 
-add_dependencies(
-  djv_convert
-  ${djv_image_dep}
-)
-
-target_link_libraries(
-  djv_convert
-  ${djv_image_lib}
-)
+target_link_libraries(djv_convert ${djv_core_libs})
 
 if (djv_install_rpath)
-  set_target_properties(
-    djv_convert PROPERTIES
-    INSTALL_RPATH "${djv_install_rpath}"
-  )
+
+    set_target_properties(
+        djv_convert PROPERTIES
+        INSTALL_RPATH "${djv_install_rpath}")
+
 endif (djv_install_rpath)
 
-install(
-  TARGETS djv_convert
-  RUNTIME DESTINATION bin
-)
+if (djv_image_io_plugins)
 
-if (APPLE)
-  DJV_OSX_INSTALL_BIN(djv_convert)
-endif (APPLE)
+    add_dependencies(djv_convert ${djv_image_io_plugins})
+
+endif (djv_image_io_plugins)
+
+install(
+    TARGETS djv_convert
+    RUNTIME DESTINATION bin)
 

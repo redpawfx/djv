@@ -1,36 +1,34 @@
-include_directories(${djv_image_inc})
+include_directories(${CMAKE_SOURCE_DIR}/bin/util ${djv_core_include_dirs})
 
-set(
-  util
-  djv_cineon_info
-  djv_dpx_info
-)
+add_executable(djv_cineon_info djv_cineon_info.cxx)
 
-foreach (i ${util})
+target_link_libraries(djv_cineon_info ${djv_core_libs})
 
-  file(GLOB src ${i}*.h ${i}*.cxx)
-  
-  add_executable(${i} ${src})
+if (djv_install_rpath)
 
-  add_dependencies(${i} ${djv_image_dep})
-
-  target_link_libraries(${i} ${djv_image_lib})
-
-  if (djv_install_rpath)
     set_target_properties(
-      ${i} PROPERTIES
-      INSTALL_RPATH "${djv_install_rpath}"
-    )
-  endif (djv_install_rpath)
+        djv_cineon_info PROPERTIES
+        INSTALL_RPATH "${djv_install_rpath}")
 
-  install(
-    TARGETS ${i}
-    RUNTIME DESTINATION bin
-  )
-  
-  if (APPLE)
-    DJV_OSX_INSTALL_BIN(${i})
-  endif (APPLE)
+endif (djv_install_rpath)
 
-endforeach (i)
+install(
+    TARGETS djv_cineon_info
+    RUNTIME DESTINATION bin)
+
+add_executable(djv_dpx_info djv_dpx_info.cxx)
+
+target_link_libraries(djv_dpx_info ${djv_core_libs})
+
+if (djv_install_rpath)
+
+    set_target_properties(
+        djv_dpx_info PROPERTIES
+        INSTALL_RPATH "${djv_install_rpath}")
+
+endif (djv_install_rpath)
+
+install(
+    TARGETS djv_dpx_info
+    RUNTIME DESTINATION bin)
 

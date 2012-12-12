@@ -1,162 +1,135 @@
-set(
-  header
-  application.h
-  base.h
-  cache.h
-  file_group.h
-  file_prefs.h
-  file_save.h
-  help_group.h
-  image_base.h
-  image_display_profile.h
-  image_group.h
-  image_prefs.h
-  input_base.h
-  input_prefs.h
-  playback_base.h
-  playback_group.h
-  playback_prefs.h
-  shortcut.h
-  tool_color_picker.h
-  tool_group.h
-  tool_histogram.h
-  tool_info.h
-  tool_magnify.h
-  view_base.h
-  view_group.h
-  view_prefs.h
-  view_widget.h
-  widget.h
-  window.h
-  window_base.h
-  window_prefs.h
-)
+set(header
+    djv_view_application.h
+    djv_view_cache.h
+    djv_view_color_picker.h
+    djv_view_display_profile.h
+    djv_view_display_profile_dialog.h
+    djv_view_file_group.h
+    djv_view_file_prefs.h
+    djv_view_file_save.h
+    djv_view_help_group.h
+    djv_view_histogram_dialog.h
+    djv_view_hud_info.h
+    djv_view_image.h
+    djv_view_image_group.h
+    djv_view_image_prefs.h
+    djv_view_info_dialog.h
+    djv_view_input.h
+    djv_view_input_prefs.h
+    djv_view_magnify_dialog.h
+    djv_view_playback.h
+    djv_view_playback_group.h
+    djv_view_playback_prefs.h
+    djv_view_shortcut.h
+    djv_view_shortcut_prefs.h
+    djv_view_tool_group.h
+    djv_view_view.h
+    djv_view_view_group.h
+    djv_view_view_prefs.h
+    djv_view_view_widget.h
+    djv_view_widget.h
+    djv_view_window.h
+    djv_view_window_prefs.h)
 
-set(
-  src
-  application.cxx
-  cache.cxx
-  cache_etc.cxx
-  command_line.cxx
-  file_etc.cxx
-  file_group.cxx
-  file_prefs.cxx
-  file_prefs_widget.cxx
-  file_save.cxx
-  help_etc.cxx
-  help_group.cxx
-  image_display_profile.cxx
-  image_etc.cxx
-  image_group.cxx
-  image_prefs.cxx
-  image_prefs_widget.cxx
-  input_etc.cxx
-  input_prefs.cxx
-  input_prefs_widget.cxx
-  playback_etc.cxx
-  playback_group.cxx
-  playback_prefs.cxx
-  playback_prefs_widget.cxx
-  shortcut_etc.cxx
-  shortcut_prefs.cxx
-  shortcut_prefs_widget.cxx
-  tool_color_picker.cxx
-  tool_etc.cxx
-  tool_group.cxx
-  tool_histogram_dialog.cxx
-  tool_histogram_widget.cxx
-  tool_info.cxx
-  tool_magnify.cxx
-  view_etc.cxx
-  view_group.cxx
-  view_prefs.cxx
-  view_prefs_widget.cxx
-  view_widget.cxx
-  widget.cxx
-  window.cxx
-  window_etc.cxx
-  window_factory.cxx
-  window_prefs.cxx
-  window_prefs_widget.cxx
-)
+set(source
+    djv_view_application.cpp
+    djv_view_cache.cpp
+    djv_view_color_picker.cpp
+    djv_view_display_profile.cpp
+    djv_view_display_profile_dialog.cpp
+    djv_view_file_group.cpp
+    djv_view_file_prefs.cpp
+    djv_view_file_save.cpp
+    djv_view_help_group.cpp
+    djv_view_histogram_dialog.cpp
+    djv_view_image.cpp
+    djv_view_image_group.cpp
+    djv_view_image_prefs.cpp
+    djv_view_info_dialog.cpp
+    djv_view_input.cpp
+    djv_view_input_prefs.cpp
+    djv_view_magnify_dialog.cpp
+    djv_view_playback.cpp
+    djv_view_playback_group.cpp
+    djv_view_playback_prefs.cpp
+    djv_view_shortcut.cpp
+    djv_view_shortcut_prefs.cpp
+    djv_view_tool_group.cpp
+    djv_view_view.cpp
+    djv_view_view_group.cpp
+    djv_view_view_prefs.cpp
+    djv_view_view_widget.cpp
+    djv_view_widget.cpp
+    djv_view_window.cpp
+    djv_view_window_prefs.cpp)
 
 if (WIN32)
 
-  set(header ${header} ../../lib/djv_ui/winrc.h)
-  set(src ${src} ../../lib/djv_ui/win.rc)
+    set(header
+        ${header}
+        ../../lib/djv_gui/winrc.h)
+
+    set(source
+        ${source}
+        ../../lib/djv_gui/win.rc)
 
 endif (WIN32)
 
-include_directories(${djv_ui_inc})
+include_directories(${CMAKE_SOURCE_DIR}/bin/djv_view ${djv_gui_include_dirs})
 
-add_executable(
-  djv_view
-  WIN32
-  ${header} ${src} win_main.cxx
-)
+add_executable(djv_view ${header} ${source} djv_view_win_main.cpp)
 
-add_dependencies(
-  djv_view
-  ${djv_ui_dep}
-)
-
-target_link_libraries(
-  djv_view
-  ${djv_ui_lib}
-)
-
-set_target_properties(
-  djv_view PROPERTIES
-  COMPILE_FLAGS "${djv_compiler_flags}"
-  LINK_FLAGS "${djv_link_flags}"
-)
+target_link_libraries(djv_view ${djv_gui_libs})
 
 if (djv_install_rpath)
-  set_target_properties(
-    djv_view PROPERTIES
-    INSTALL_RPATH "${djv_install_rpath}"
-  )
+
+    set_target_properties(
+        djv_view PROPERTIES
+        INSTALL_RPATH "${djv_install_rpath}")
+
 endif (djv_install_rpath)
 
+if (djv_image_io_plugins)
+
+    add_dependencies(djv_view ${djv_image_io_plugins})
+
+endif (djv_image_io_plugins)
+
 install(
-  TARGETS djv_view
-  RUNTIME DESTINATION bin
-)
+    TARGETS djv_view
+    RUNTIME DESTINATION bin)
 
-if (APPLE)
-  DJV_OSX_INSTALL_BIN(djv_view)
-endif (APPLE)
-
-# XXX Windows command line version (.com).
+# \todo Windows command line version (.com).
 
 if (WIN32)
 
-  add_executable(djv_view. ${header} ${src} main.cxx)
+    add_executable(djv_view. ${header} ${source} djv_view_main.cpp)
   
-  add_dependencies(djv_view. ${djv_ui_dep})
+    target_link_libraries(djv_view. ${djv_gui_libs})
   
-  target_link_libraries(djv_view. ${djv_ui_lib})
-  
-  set_target_properties(
-    djv_view.
-    PROPERTIES
-    SUFFIX com
-  )
-  
-  if (djv_install_rpath)
     set_target_properties(
-      djv_view.
-      PROPERTIES
-      INSTALL_RPATH "${djv_install_rpath}"
-      COMPILER_FLAGS ${djv_compiler_flags}
-      LINK_FLAGS ${djv_link_flags}
-    )
-  endif (djv_install_rpath)
+        djv_view.
+        PROPERTIES
+        SUFFIX com)
+
+    if (djv_install_rpath)
   
-  install(
-    TARGETS djv_view.
-    RUNTIME DESTINATION bin
-  )
+        set_target_properties(
+            djv_view.
+            PROPERTIES
+            INSTALL_RPATH "${djv_install_rpath}")
+  
+    endif (djv_install_rpath)
+  
+    if (djv_image_io_plugins)
+  
+        add_dependencies(djv_view. ${djv_image_io_plugins})
+  
+    endif (djv_image_io_plugins)
+  
+    install(
+        TARGETS djv_view.
+        RUNTIME DESTINATION bin)
 
 endif (WIN32)
 

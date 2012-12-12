@@ -1,0 +1,625 @@
+<!-- ---------------------------------------------------------------------------
+   Copyright (c) 2004-2012 Darby Johnston
+   All rights reserved.
+  
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice,
+     this list of conditions, and the following disclaimer.
+  
+   * Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions, and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+  
+   * Neither the names of the copyright holders nor the names of any
+     contributors may be used to endorse or promote products derived from this
+     software without specific prior written permission.
+  
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   SUBSTITUE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   POSSIBILITY OF SUCH DAMAGE.
+---------------------------------------------------------------------------- -->
+
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>DJV Imaging - Images</title>
+</head>
+
+<body>
+
+<div class="header">
+<div style="position:absolute; top:10; left:10; height:50;">
+<a href="index.html"><img src="logo.gif" align="middle"></a>
+</div>
+<div style="position:absolute; top:0; right:0;">
+<a href="index.html"><img src="projector.gif"></a>
+</div>
+</div>
+
+<div class="nav">
+<a class="nav" href="index.html">Home</a>
+<a class="nav_current" href="documentation.html">Documentation</a>
+<a class="nav" href="screenshots.html">Screenshots</a>
+<a class="nav" href="downloads.html">Downloads</a>
+<a class="nav" href="install.html">Install</a>
+<a class="nav" href="faq.html">FAQ</a>
+<a class="nav" href="credits.html">Credits</a>
+<a class="nav" href="legal.html">Legal</a>
+</div>
+
+<div class="nav">
+<a class="nav" href="documentation.html">Index</a>
+<a class="nav" href="djv_view.html">djv_view</a>
+<a class="nav" href="djv_convert.html">djv_convert</a>
+<a class="nav" href="djv_info.html">djv_info</a>
+<a class="nav" href="djv_ls.html">djv_ls</a>
+<a class="nav" href="general.html">General</a>
+<a class="nav_current" href="images.html">Images</a>
+<a class="nav" href="file_browser.html">File Browser</a>
+<a class="nav" href="doxygen/html/index.html">Doxygen</a>
+</div>
+
+<div class="chapter">
+<h1>Images</h1>
+<a href="#pixels">Pixels and Channels</a><br>
+<a href="#proxy">Proxy Scale</a><br>
+<a href="#color_profile">Color Profiles</a><br>
+<a href="#cineon">Cineon</a><br>
+<a href="#dpx">DPX</a><br>
+<a href="#iff">IFF</a><br>
+<a href="#ifl">IFL</a><br>
+<a href="#jpeg">JPEG</a><br>
+<a href="#libquicktime">libquicktime</a><br>
+<a href="#lut">LUT</a><br>
+<a href="#openexr">OpenEXR</a><br>
+<a href="#pic">PIC</a><br>
+<a href="#png">PNG</a><br>
+<a href="#ppm">PPM</a><br>
+<a href="#quicktime">QuickTime</a><br>
+<a href="#rla">RLA</a><br>
+<a href="#sgi">SGI</a><br>
+<a href="#tiff">TIFF</a>
+</div>
+
+<div class="chapter">
+<a name="pixels"><h2>Pixels and Channels</h2></a>
+<p>/todo</p>
+</div>
+
+<div class="chapter">
+<a name="proxy"><h2>Proxy Scale</h2></a>
+<p>/todo</p>
+</div>
+
+<div class="chapter">
+<a name="color_profile"><h2>Color Profiles</h2></a>
+<p>/todo</p>
+</div>
+
+<div class="chapter">
+<a name="cineon"><h2>Cineon</h2></a>
+<p>This plugin provides support for the Kodak Cineon image file format. Cineon
+is a specialized image file format for working with motion picture film.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Image data: RGB 10-bit (the most common variety)</li>
+    <li>Interleaved channels only</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.cin</li>
+</ul>
+<h4>References</h4>
+<ul>
+    <li>Kodak, "4.5 DRAFT - Image File Format Proposal for Digital
+    Pictures"</li>
+</ul>
+<h4>Load Options</h4>
+<table>
+    <tr>
+        <td><code>Color Profile</code></td>
+        <td>Set the color profile. Options = Auto, None, Film Print. Default =
+        Auto.</td>
+    </tr>
+    <tr>
+        <td><code>Film Print</code></td>
+        <td>Set the film print color profile values (black point 0-1024, white
+        point 0-1024, gamma). Default = 95, 685, 1.7.</td>
+    </tr>
+    <tr>
+        <td><code>Convert</code></td>
+        <td>Convert the bit-depth. Options = None, U8, U16. Default = None.</td>
+    </tr>
+</table>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Color Profile</code></td>
+        <td>Set the color profile. Options = Auto, None, Film Print. Default =
+        Film Print.</td>
+    </tr>
+    <tr>
+        <td><code>Film Print</code></td>
+        <td>Set the film print color profile values (black point 0-1024, white
+        point 0-1024, gamma). Default = 95, 685, 1.7.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="dpx"><h2>DPX</h2></a>
+<p>This plugin provides support for the SMPTE Digital Picture Exchange (DPX)
+image file format. DPX is a specialized image file format for working with
+motion picture film. DPX is the successor to the Cineon file format with
+support for additional image and meta data.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 10-bit RGB type "A" packing (the most common variety);
+    8-bit, 16-bit, Luminance, RGB, RGBA</li>
+    <li>Interleaved channels only</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.dpx</li>
+</ul>
+<h4>References</h4>
+<ul>
+    <li>SMPTE, "SMPTE 268M-2003", http://www.smpte.org</li>
+    <li>Cinesite, "Conversion of 10-bit Log Film Data To 8-bit Linear or Video
+    Data"</li>
+</ul>
+<h4>Load Options</h4>
+<table>
+    <tr>
+        <td><code>Color Profile</code></td>
+        <td>Set the color profile. Options = Auto, None, Film Print. Default =
+        Auto.</td>
+    </tr>
+    <tr>
+        <td><code>Film Print</code></td>
+        <td>Set the film print color profile values (black point 0-1024, white
+        point 0-1024, gamma). Default = 95, 685, 1.7.</td>
+    </tr>
+    <tr>
+        <td><code>Convert</code></td>
+        <td>Convert the bit-depth. Options = None, U8, U16. Default = None.</td>
+    </tr>
+</table>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Color Profile</code></td>
+        <td>Set the color profile. Options = Auto, None, Film Print. Default =
+        Film Print.</td>
+    </tr>
+    <tr>
+        <td><code>Film Print</code></td>
+        <td>Set the film print color profile values (black point 0-1024, white
+        point 0-1024, gamma). Default = 95, 685, 1.7.</td>
+    </tr>
+    <tr>
+        <td><code>Version</code></td>
+        <td>Set the file version. Options = 1.0, 2.0. Default = 2.0.</td>
+    </tr>
+    <tr>
+        <td><code>Type</code></td>
+        <td>Set the file type. Options = Auto, U10. Default = U10.</td>
+    </tr>
+    <tr>
+        <td><code>Endian</code></td>
+        <td>Set the file endian. Options = Auto, MSB, LSB. Default = MSB.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="iff"><h2>IFF</h2></a>
+<p>This plugin provides support for the Generic Interchange File Format (IFF).</p>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 8-bit, 16-bit, Luminance, Luminance Alpha, RGB, RGBA</li>
+    <li>File compression</li>
+</ul>
+<h4>References</h4>
+<ul>
+    <li>Affine Toolkit (Thomas E. Burge), riff.h and riff.c,
+    http://affine.org</li>
+    <li>Autodesk Maya documentation, "Overview of Maya IFF"</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.iff</li>
+    <li>.z</li>
+</ul>
+<h4>Implementation:</h4>
+<ul>
+    <li>Mikael Sundell, mikael.sundell@gmail.com</li>
+</ul>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Compression</code></td>
+        <td>>Set the file compression. Options = None, RLE. Default = RLE.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="ifl"><h2>IFL</h2></a>
+<p>This plugin provides support for the Autodesk Image File List (IFL) format.
+IFL is a file format for creating sequences or playlists of other image files.
+An IFL file simply consists of a list of image file names, one per line.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Read-only</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.ifl</li>
+</ul>
+</div>
+
+<div class="chapter">
+<a name="jepg"><h2>JPEG</h2></a>
+<p>This plugin supports the Joint Photographic Experts Group (JPEG) image file
+format.</p>
+<h4>Requires</h4>
+<ul>
+    <li>libjpeg - http://www.ijg.org</li>
+</ul>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 8-bit, Luminance, RGB</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.jpeg</li>
+    <li>.jpg</li>
+    <li>.jfif</li>
+</ul>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Quality</code></td>
+        <td>Set the file quality (0-100). Default = 100.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="libquicktime"><h2>libquicktime</h2></a>
+<p>This plugin supports libquicktime, an open source library for reading and
+writing movies.</p>
+<h4>Requires</h4>
+<ul>
+    <li>libquicktime - http://libquicktime.sourceforge.net</li>
+</ul>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 8-bit RGBA</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.qt</li>
+    <li>.mov</li>
+    <li>.avi</li>
+    <li>.mp4</li>
+</ul>
+<h4>Load Options</h4>
+<table>
+    <tr>
+        <td><code>Start</code></td>
+        <td>Set the frame number used as the start frame of the move. Default =
+        0.</td>
+    </tr>
+</table>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Codec</code></td>
+        <td>Set the codec. Default = jpeg.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="lut"><h2>LUT</h2></a>
+<p>This plugin supports two-dimensional lookup table file formats.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Formats: Inferno, Kodak</li>
+    <li>Images: 8-bit, 16-bit, Luminance, Luminance Alpha, RGB, RGBA;
+    10-bit RGB</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.lut</li>
+    <li>.1dl</li>
+</ul>
+<h4>Load Options</h4>
+<table>
+    <tr>
+        <td><code>Format</code></td>
+        <td>Set the file format. Options = Auto, Inferno, Kodak. Default =
+        Auto.</td>
+    </tr>
+    <tr>
+        <td><code>Type</code></td>
+        <td>Set the file bit depth. Options = Auto, U8, U10, U16. Default =
+        Auto.</td>
+    </tr>
+</table>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Format</code></td>
+        <td>Set the file format. Options = Auto, Inferno, Kodak. Default =
+        Auto.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="openexr"><h2>OpenEXR</h2></a>
+<p>This plugin provides support for the Industrial Light and Magic OpenEXR image
+file format.</p>
+<h4>Requires</h4>
+<ul>
+    <li>OpenEXR - http://www.openexr.com</li>
+</ul>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 16-bit float, 32-bit float, Luminance, Luminance Alpha, RGB, RGBA</li>
+    <li>Image layers</li>
+    <li>Display and data windows</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.exr</li>
+</ul>
+<h4>Load Options</h4>
+<table>
+    <tr>
+        <td><code>Color Profile</code></td>
+        <td>Set the color profile. Options = None, Gamma, Exposure. Default =
+        Gamma.</td>
+    </tr>
+    <tr>
+        <td><code>Gamma</code></td>
+        <td>Set the gamma color profile value. Default = 2.2.</td>
+    </tr>
+    <tr>
+        <td><code>Exposure</code></td>
+        <td>Set the exposure color profile values (value, defog, knee low, knee
+        high). Default = 0.0, 0.0, 0.0, 5.0.</td>
+    </tr>
+    <tr>
+        <td><code>Channels</code></td>
+        <td>Set how channels are grouped. Options = None, Known, All. Default =
+        Known.</td>
+    </tr>
+</table>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>compression</code></td>
+        <td>Set the file compression. Options = None, RLE, ZIPS, ZIP, PIZ,
+        PXR24, B44, B44A. Default = None.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="pic"><h2>PIC</h2></a>
+<p>This plugin provides support for the Softimage image file format.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Read-only</li>
+    <li>Images: 8-bit, RGB, RGBA, RGB plus Alpha</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.pic</li>
+</ul>
+<h4>References</h4>
+<ul>
+    <li>Softimage, "INFO: PIC file format",
+    http://xsi.wiki.avid.com/index.php/INFO:_PIC_file_format</li>
+</ul>
+</div>
+
+<div class="chapter">
+<a name="png"><h2>PNG</h2></a>
+<p>This plugin supports the Portable Network Graphics (PNG) image file format.
+</p>
+<h4>Requires</h4>
+<ul>
+    <li>libpng - http://www.libpng.org</li>
+</ul>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 8-bit, 16-bit, Luminance, RGB, RGBA</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.png, .PNG</li>
+</ul>
+</div>
+
+<div class="chapter">
+<a name="ppm"><h2>PPM</h2></a>
+<p>This plugin supports the NetPBM image file formats.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 1-bit, 8-bit, 16-bit, Luminance, RGB</li>
+    <li>Binary and ASCII data</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.ppm</li>
+    <li>.pnm</li>
+    <li>.pgm</li>
+    <li>.pbm</li>
+</ul>
+<h4>References</h4>
+<ul>
+    <li>Netpbm, "PPM Format Specification",
+    http://netpbm.sourceforge.net/doc/ppm.html</li>
+</ul>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Type</code></td>
+        <td>Set the file type. Options = Auto, U1. Default = Auto.</td>
+    </tr>
+    <tr>
+        <td><code>Data</code></td>
+        <td>Set the file data. Options = ASCII, Binary. Default = Binary.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="quicktime"><h2>QuickTime</h2></a>
+<p>This plugin supports the Apple QuickTime movie file format.</p>
+<h4>Requires</h4>
+<ul>
+    <li>QuickTime - http://www.apple.com/quicktime</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.qt</li>
+    <li>.mov</li>
+    <li>.avi</li>
+    <li>.mp4</li>
+</ul>
+<h4>Supports</h4>
+<ul>
+    <li>Only available for Apple OS X and Microsoft Windows 32-bit builds</li>
+    <li>Image data: RGBA, 8-bit</li>
+    <li>File compression</li>
+</ul>
+<h4>Load Options</h4>
+<table>
+    <tr>
+        <td><code>Start</code></td>
+        <td>Set the frame number used as the start frame of the move. Default =
+        0.</td>
+    </tr>
+</table>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Codec</code></td>
+        <td>Set the codec. Options = Raw, JPEG, MJPEG-A, MJPEG-B, H263, H264,
+        DVC-NTSC, DVC-PAL. Default = JPEG.</td>
+    </tr>
+    <tr>
+        <td><code>Quality</code></td>
+        <td>Set the quality. Options = Lossless, Min, Max, Low, Normal, High.
+        Default = Normal.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="rla"><h2>RLA</h2></a>
+<p>This plugin supports the Wavefront RLA image file format.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Read-only</li>
+    <li>Images: 8-bit, 16-bit, 32-bit float, Luminance, Luminance Alpha, RGB,
+    RGBA</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.rla</li>
+    <li>.rpf</li>
+</ul>
+<h4>References</h4>
+<ul>
+    <li>James D. Murray, William vanRyper, "Encyclopedia of Graphics File
+    Formats, Second Edition"</li>
+</ul>
+</div>
+
+<div class="chapter">
+<a name="sgi"><h2>SGI</h2></a>
+<p>This plugin provides support for the Silicon Graphics image file format.</p>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 8-bit, 16-bit, Luminance, Luminance Alpha, RGB, RGBA</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.sgi</li>
+    <li>.rgb</li>
+    <li>.rgba</li>
+    <li>.bw</li>
+</ul>
+<h4>References</h4>
+<ul>
+    <li>Paul Haeberli, "The SGI Image File Format, Version 1.00"</li>
+</ul>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Compression</code></td>
+        <td>Set the file compression. Options = None, RLE. Default = None.</td>
+    </tr>
+</table>
+</div>
+
+<div class="chapter">
+<a name="tiff"><h2>TIFF</h2></a>
+<p>This plugin provides support for the Tagged Image File Format (TIFF).</p>
+<h4>Requires</h4>
+<ul>
+    <li>libtiff - http://www.libtiff.org</li>
+</ul>
+<h4>Supports</h4>
+<ul>
+    <li>Images: 8-bit, 16-bit, 32-bit float, Luminance, Luminance Alpha, RGB,
+    RGBA</li>
+    <li>Interleaved channels only</li>
+    <li>File compression</li>
+</ul>
+<h4>File Extensions</h4>
+<ul>
+    <li>.tiff</li>
+    <li>.tif</li>
+</ul>
+<h4>Save Options</h4>
+<table>
+    <tr>
+        <td><code>Compression</code></td>
+        <td>Set the file compression. Options = None, RLE, LZW. Default = None.</td>
+    </tr>
+</table>
+</div>
+
+<div class="footer">
+Copyright (c) 2004-2012 Darby Johnston
+</div>
+
+</body>
+
+</html>

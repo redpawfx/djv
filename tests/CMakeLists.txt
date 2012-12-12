@@ -1,0 +1,7 @@
+#add_subdirectory(djv_audio_test)
+add_subdirectory(djv_core_test)
+add_subdirectory(djv_glsl_test)
+add_subdirectory(djv_gui_test)
+add_subdirectory(djv_play_test)
+add_subdirectory(djv_play2_test)
+add_subdirectory(djv_view_test)

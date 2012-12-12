@@ -1,17 +1,17 @@
---------------------------------------------------------------------------------
+
  DJV Imaging - Legal Notices
 
  Contents:
  
  * Copyright and License
  * Contributors
- * Third-Party Software
+ * Software Dependencies
  * Trademarks
 
---------------------------------------------------------------------------------
+
  Copyright and License
  
- Copyright (c) 2004-2009 Darby Johnston
+ Copyright (c) 2004-2012 Darby Johnston
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
 
---------------------------------------------------------------------------------
+
  Contributors
  
  Portions of this software are copyright (in alphabetical order):
@@ -48,27 +48,17 @@
  Copyright (c) 2008 Alan Jones.
  All rights reserved.
  
- Copyright Copyright (C) 1999-2007  Brian Paul   All Rights Reserved. 2008-2009 Mikael Sundell
+ Copyright (c) 2008-2009 Mikael Sundell
  All rights reserved.
 
---------------------------------------------------------------------------------
- Third-Party Software
+
+ Software Dependencies
  
  This software is based in part on the works of (in alphabetical order):
- 
- CTL
- http://www.oscars.org/science-technology/council/projects/ctl.html
- Copyright (c) 2007 Academy of Motion Picture Arts and Sciences (A.M.P.A.S.)
- Portions contributed by others as indicated. All rights reserved.
- 
- FFmpeg
- http://ffmpeg.mplayerhq.hu
- Copyright (c) 2000-2003 Fabrice Bellard
- LGPL License http://www.gnu.org/licenses/lgpl.html
- 
+  
  FLTK
  http://www.fltk.org
- Copyright 1998-2006, Bill Spitzak
+ Copyright 1998-2011 Bill Spitzak and others
  
  GLEW
  http://glew.sourceforge.net
@@ -79,11 +69,11 @@
  
  libjpeg
  http://www.ijg.org
- Copyright (c) 1991-1998, Thomas G. Lane
+ Copyright (c) 1991-2012, Thomas G. Lane, Guido Vollbeding
  
  libpng
  http://www.libpng.org
- Copyright (c) 2004, 2006 Glenn Randers-Pehrson
+ Copyright (c) 2004, 2006-2011 Glenn Randers-Pehrson
  
  libquicktime
  http://libquicktime.sourceforge.net
@@ -96,59 +86,49 @@
  Copyright (c) 1988-1997 Sam Leffler
  Copyright (c) 1991-1997 Silicon Graphics, Inc.
  
- Mesa
- http://www.mesa3d.org
- Copyright (c) 1999-2007 Brian Paul
- 
  OpenEXR
  http://www.openexr.com
- Copyright (c) 2004, Industrial Light & Magic, a division of Lucasfilm
+ Copyright (c) 2006, Industrial Light & Magic, a division of Lucasfilm
  Entertainment Company Ltd.
  
  PortAudio
  http://www.portaudio.com
- Copyright (c) 1999-2006 Phil Burk and Ross Bencina
- 
+ Copyright (c) 1999-2006 Ross Bencina and Phil Burk
+
  Qt
  http://www.qtsoftware.com
- Copyright (c) 2008-2009 Nokia Corporation
- 
+ Copyright (c) 2008-2012 Nokia Corporation
+   
  zlib
  http://www.zlib.net/
- Copyright (c) 1995-2005 Jean-loup Gailly and Mark Adler
+ Copyright (c) 1995-2012 Jean-loup Gailly and Mark Adler
 
---------------------------------------------------------------------------------
+
  Trademarks
 
  Trademarks named in the documentation (in alphabetical order):
  
- * Apple, Mac OS, and QuickTime are registered trademarks of Apple, Inc.
+ * Apple, OS X, and QuickTime are registered trademarks of Apple, Inc.
  * AMD and ATI are registered trademarks of Advanced Micro Devices, Inc.
  * Autodesk, Inferno, Maya, Softimage, and XSI are registered trademarks of
    Autodesk, Inc.
  * Debian is a registered trademark of Software in the Public Interest, Inc.
  * FFmpeg is a trademark of Fabrice Bellard, originator of the FFmpeg project.
  * FreeBSD is a registered trademark of The FreeBSD Foundation.
- * IBM and PowerPC are registered trademarks of IBM Corporation.
  * Intel is a registered trademark of Intel Corporation.
  * Industrial Light & Magic and ILM are registered trademarks of Lucasfilm Ltd.
  * Kodak and Cineon are registered trademarks of the Eastman Kodak Company.
  * Linux is a registered trademark of Linus Torvalds.
  * Microsoft and Microsoft Windows are registered trademarks of Microsoft, Inc.
- * MIPS is a registered trademark of MIPS Technologies, Inc.
- * Nokia and Qt are registered trademarks of Nokia Corporation.
- * NVIDIA is a registered trademark of NVIDIA Corporation.
  * Nokia, Qt, and their respective logos are trademarks of Nokia Corporation in
    Finland and/or other countries worldwide. 
+ * NVIDIA is a registered trademark of NVIDIA Corporation.
  * Red Hat and Fedora are registered trademarks of Red Hat, Inc.
  * Silicon Graphics, SGI, IRIX, and OpenGL are registered trademarks of Silicon
-   Graphics, Inc.
+   Graphics International Corp.
  * SMPTE is a registered trademark of the Society of Motion Picture and
    Television Engineers.
  * SourceForge.net is a registered trademark of VA Software Corporation.
- * SPARC is a registered trademark of SPARC International, Inc.
- * Sun, Sun Microsystems, and Solaris are registered trademarks of Sun
-   Microsystems, Inc.
  * SuSE is a registered trademark of Novell, Inc.
  * Ubuntu is a registered trademark of Canonical Ltd.
  * UNIX is a registered trademark of The Open Group.
