@@ -1,0 +1,8 @@
+IF (DJV_MACOSX)
+  INSTALL(
+    FILES
+    djv_view.icns
+    DESTINATION ${_DJV_INSTALL_DJV_VIEW}/Resources
+  )
+ENDIF (DJV_MACOSX)
+

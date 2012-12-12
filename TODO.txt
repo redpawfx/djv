@@ -1,0 +1,74 @@
+--------------------------------------------------------------------------------
+ Features
+
+ * Allow users to specify where preference files are stored. (Is this possible
+   with FLTK?)
+ * Add support for multiple preference files; e.g., site-wide, group, per-user
+   preferences.
+ * Add an option to reset preferences to default values. Possibly extend this
+   to "preference profiles", where the default values are just one of many
+   profiles the user can choose from.
+ * Direct suport for ffmpeg? (It's currently only used indirectly through
+   libquicktime.)
+ * Add buttons or some other widget to the file browser for quickly navigating
+   shortcuts.
+ * Add support for additional formats like R3D and JPEG2000?
+ * Text generator for burn-in and slate generation.
+ * Software rendering / Mesa?
+ 
+ djv_convert:
+ 
+ * Convert entire directories of images.
+ * Multiple outputs.
+ 
+ djv_view:
+
+ * A/B image comparison.
+ * Automatically hide and show the menubar in fullscreen mode.
+ * Add support for sequence handles.
+ * More image analysis tools: waveform monitor, vector scope, legal colors.
+ * Masking and image cropping (1.85, 2.35, safe areas).
+ * Audio.
+ * Playlists.
+ * Layers.
+ * Stereo.
+
+--------------------------------------------------------------------------------
+ Bugs
+
+ * Better handling of Windows drive letter mappings.
+ * Nested scroll widget drawing artifacts.
+ * How do we return partial image data for incomplete files?
+ * Layouts and widgets with minimum sizes set to zero?
+
+--------------------------------------------------------------------------------
+ In-Progress
+
+ * Maya IFF image file format.
+ * Autodesk RLA/RPF image file format.
+ * Softimage PIC image file format.
+ * Microsoft Windows install and packaging.
+ * Mac OS install and packaging.
+ * Unit tests.
+ * Arbitrary image channels.
+ * Drag and drop.
+ * Color profiles.
+ * FLTK shortcut collisions.
+ * Multi-pass scaling with ROI.
+ * OpenGL FBO offscreen buffers / rendering contexts.
+
+--------------------------------------------------------------------------------
+ Undetermined
+
+ * Drop-frame timecode?
+ * Should image files be determined by extension or by inspecting the file
+   header?
+
+--------------------------------------------------------------------------------
+ Doxygen Issues
+
+ * Order isn't preserved for groups?
+ * Namespace/using not supported?
+ * Functions with the same name but in different namespaces sometimes get
+   mixed-up comments. (e.g., global())
+

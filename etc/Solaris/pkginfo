@@ -1,0 +1,8 @@
+PKG=djv
+NAME=DJV Imaging
+CATEGORY=application
+VERSION=0.8.2
+VENDOR=http://djv.sourceforge.net
+EMAIL=darbyjohnston@yahoo.com
+DESC=Digital imaging software for movie playback, image processing, and monitor calibration.
+

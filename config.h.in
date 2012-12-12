@@ -1,0 +1,68 @@
+/*------------------------------------------------------------------------------
+ config.h
+ 
+ Copyright (c) 2004-2009 Darby Johnston
+ All rights reserved.
+ Use is subject to license terms.
+------------------------------------------------------------------------------*/
+
+#ifndef DJV_CONFIG_H
+#define DJV_CONFIG_H
+
+//------------------------------------------------------------------------------
+// General Options
+//------------------------------------------------------------------------------
+
+// Software version.
+
+#define DJV_VERSION_NAME "@djv_version_name@"
+#define DJV_VERSION_MAJOR "@djv_version_major@"
+#define DJV_VERSION_MINOR "@djv_version_minor@"
+#define DJV_VERSION_PATCH "@djv_version_patch@"
+#define DJV_VERSION_BETA "@djv_version_beta@"
+
+// System.
+
+#define DJV_SYSTEM_NAME "@djv_system_name@"
+#define DJV_SYSTEM_PROCESSOR "@djv_system_processor@"
+
+//------------------------------------------------------------------------------
+// System Options, Microsoft Windows
+//------------------------------------------------------------------------------
+
+#if defined(WIN32)
+
+// warning C4251: '' : class '' needs to have dll-interface to be used by
+// clients of class ''
+
+#pragma warning(disable: 4251)
+
+// warning C4275: non dll-interface class '' used as base for dll-interface
+// class ''
+
+#pragma warning(disable: 4275)
+
+// warning C4290: C++ exception specification ignored except to indicate a
+// function is not __declspec(nothrow)
+
+#pragma warning(disable: 4290)
+
+// warning C4355: 'this' : used in base member initializer list
+
+#pragma warning(disable: 4355)
+
+// XXX - warning C4150: deletion of pointer to incomplete type
+
+#pragma warning(disable: 4150)
+
+#endif
+
+//------------------------------------------------------------------------------
+// Third-Party Software
+//------------------------------------------------------------------------------
+
+#cmakedefine DJV_THIRD_PARTY_LIBQUICKTIME
+
+//------------------------------------------------------------------------------
+
+#endif

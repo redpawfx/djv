@@ -1,0 +1,1301 @@
+#-------------------------------------------------------------------------------
+# DJV Imaging - CMake Build System Internals
+#
+# Contents:
+#
+# * Software Information
+# * Software Components
+# * System Information
+#   * Apple Mac OS
+#   * Linux
+#   * Microsoft Windows
+#   * Sun Solaris
+# * Utilities
+#   * Macros
+#   * Pkg-config
+#   * Linking
+# * General
+# * Third-Party Software
+#   * X11
+#   * OpenGL
+#   * GLEW
+#   * zlib
+#   * libjpeg
+#   * libpng
+#   * libtiff
+#   * QuickTime
+#   * FLTK
+#   * OpenEXR
+#   * VLUT
+#   * PortAudio
+#   * Qt
+# * Dependencies
+# * Configure File
+# * CPack
+# * Sub-directories
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Software Information
+#-------------------------------------------------------------------------------
+
+# Version.
+
+set(
+  djv_version_name
+  djv-${djv_version_major}.${djv_version_minor}.${djv_version_patch}
+)
+
+set(
+  djv_version_name
+  ${djv_version_name}${djv_version_beta}
+)
+
+#-------------------------------------------------------------------------------
+# Software Components
+#-------------------------------------------------------------------------------
+
+if (djv_build_minimal)
+
+  add_definitions(-DDJV_BUILD_MINIMAL)
+
+endif (djv_build_minimal)
+
+#-------------------------------------------------------------------------------
+# System Information
+#-------------------------------------------------------------------------------
+
+# Determine processor architecture.
+
+string(COMPARE EQUAL ${CMAKE_SYSTEM_PROCESSOR} x86 _djv_system_processor)
+if (_djv_system_processor)
+  set(djv_system_processor x86)
+endif (_djv_system_processor)
+
+string(COMPARE EQUAL ${CMAKE_SYSTEM_PROCESSOR} i386 _djv_system_processor)
+if (_djv_system_processor)
+  set(djv_system_processor x86)
+endif (_djv_system_processor)
+
+string(COMPARE EQUAL ${CMAKE_SYSTEM_PROCESSOR} i686 _djv_system_processor)
+if (_djv_system_processor)
+  set(djv_system_processor x86)
+endif (_djv_system_processor)
+
+string(COMPARE EQUAL ${CMAKE_SYSTEM_PROCESSOR} x86_64 _djv_system_processor)
+if (_djv_system_processor)
+  set(djv_system_processor x64)
+endif (_djv_system_processor)
+
+if (WIN32 AND CMAKE_CL_64)
+  set(djv_system_processor x64)
+endif (WIN32 AND CMAKE_CL_64)
+
+#message("CMAKE_SYSTEM_PROCESSOR = "${CMAKE_SYSTEM_PROCESSOR})
+#message("djv_system_processor = "${djv_system_processor})
+
+#-------------------------------------------------------------------------------
+# System Information, Apple Mac OS
+#-------------------------------------------------------------------------------
+
+if (APPLE)
+
+  set(djv_system_name MacOS)
+  
+  add_definitions(-DDJV_MACOSX)
+
+  configure_file(
+    ${PROJECT_SOURCE_DIR}/etc/MacOS/startup.sh.in
+    ${PROJECT_BINARY_DIR}/startup.sh
+  )
+  
+  configure_file(
+    ${PROJECT_SOURCE_DIR}/etc/MacOS/Info.plist.in
+    ${PROJECT_BINARY_DIR}/Info.plist
+  )
+
+  set(CPACK_BUNDLE_NAME ${djv_version_name})
+  set(CPACK_BUNDLE_ICON ${PROJECT_SOURCE_DIR}/etc/MacOS/djv.icns)
+  set(CPACK_BUNDLE_PLIST ${PROJECT_BINARY_DIR}/Info.plist)
+  set(CPACK_BUNDLE_STARTUP_COMMAND ${PROJECT_BINARY_DIR}/startup.sh)
+  set(CPACK_PACKAGE_ICON ${PROJECT_SOURCE_DIR}/etc/MacOS/djv.icns)
+  
+endif (APPLE)
+
+#-------------------------------------------------------------------------------
+# System Information, Linux
+#-------------------------------------------------------------------------------
+
+if (UNIX)
+
+  string(COMPARE EQUAL ${CMAKE_SYSTEM_NAME} Linux _TMP)
+  if (_TMP)
+  
+    set(djv_system_name Linux)
+    
+    add_definitions(-DDJV_LINUX)
+    add_definitions(-DDJV_X11)
+
+  endif (_TMP)
+
+endif (UNIX)
+
+#-------------------------------------------------------------------------------
+# System Information, Microsoft Windows
+#-------------------------------------------------------------------------------
+
+if (WIN32)
+
+  set(djv_system_name WinXP)
+  
+  add_definitions(-DDJV_WINDOWS)
+
+  # XXX Find a better way to locate the redistributable system libraries.
+  
+  add_definitions(-D_BIND_TO_CURRENT_VCLIBS_VERSION=1)
+
+  #message("CMAKE_CL_64 = "${CMAKE_CL_64})
+
+  if (CMAKE_CL_64)
+
+    set(
+      MSVC90_REDIST_DIR
+      "C:/Program Files (x86)/Microsoft Visual Studio 9.0/VC/redist"
+    )
+
+  else (CMAKE_CL_64)
+
+    set(
+      MSVC90_REDIST_DIR
+      "C:/Program Files/Microsoft Visual Studio 9.0/VC/redist"
+    )
+
+  endif (CMAKE_CL_64)
+
+  include(InstallRequiredSystemLibraries)
+
+  message("CMAKE_MSVC_ARCH = "${CMAKE_MSVC_ARCH})
+  message("CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS = "
+    ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS})
+  message("__install__libs = "${__install__libs})
+
+  set(CPACK_NSIS_MUI_ICON ${PROJECT_SOURCE_DIR}/etc/Windows/projector.ico)
+  set(CPACK_NSIS_MUI_UNICON ${PROJECT_SOURCE_DIR}/etc/Windows/projector.ico)
+
+endif (WIN32)
+
+#-------------------------------------------------------------------------------
+# System Information, Sun Solaris
+#-------------------------------------------------------------------------------
+
+#set(djv_system_name Solaris)
+#add_definitions(-DDJV_SOLARIS)
+#add_definitions(-DDJV_X11)
+
+#-------------------------------------------------------------------------------
+# Utilities
+#-------------------------------------------------------------------------------
+
+if (UNIX)
+
+  set(cp cp -f)
+  set(mkdir mkdir -p)
+  set(mv mv -f)
+  set(ln ln -sf)
+  set(sed sed)
+
+endif (UNIX)
+
+#-------------------------------------------------------------------------------
+# Utilities, Macros
+#-------------------------------------------------------------------------------
+
+macro(DJV_FIND LIST ITEM OUTPUT)
+
+  list(FIND ${LIST} ${ITEM} _TMP)
+
+  string(COMPARE NOTEQUAL "-1" "${_TMP}" ${OUTPUT})
+
+endmacro(DJV_FIND)
+
+macro(DJV_FIND_APPEND LIST ITEM OUTPUT)
+
+  list(FIND ${LIST} ${ITEM} _TMP)
+
+  string(COMPARE NOTEQUAL "-1" "${_TMP}" _TMP2)
+  if (_TMP2)
+    list(APPEND ${OUTPUT} ${ITEM})
+  endif (_TMP2)
+
+endmacro(DJV_FIND_APPEND)
+
+#-------------------------------------------------------------------------------
+# Utilities, Pkg-config
+#-------------------------------------------------------------------------------
+
+include(FindPkgConfig)
+
+macro(DJV_PKG_CONFIG PKG INCLUDE_DIR LIBRARIES)
+
+  pkg_check_modules(_${PKG} ${PKG})
+
+  # Include directories.
+  
+  set(${INCLUDE_DIR} ${_${PKG}_INCLUDE_DIRS})
+
+  # Resolve libraries.
+  
+  set(${LIBRARIES} "")
+  foreach (i ${_${PKG}_LIBRARIES})
+    find_library(_${i} ${i} ${_${PKG}_LIBRARY_DIRS})
+    list(APPEND ${LIBRARIES} ${_${i}})
+  endforeach (i)
+  
+  # XXX Resolve "-pthread" into a library.
+  
+  if (_${PKG}_LDFLAGS)
+    string(REGEX MATCH -pthread _pthread ${_${PKG}_LDFLAGS})
+    if (_pthread)
+      find_library(_LIB pthread ${_${PKG}_LIBRARY_DIRS})
+      list(APPEND ${LIBRARIES} ${_LIB})
+    endif (_pthread)
+  endif (_${PKG}_LDFLAGS)
+
+endmacro (DJV_PKG_CONFIG)
+
+#-------------------------------------------------------------------------------
+# Utilities, Linking
+#-------------------------------------------------------------------------------
+
+# Sub-directory for run-time libraries.
+
+if (WIN32)
+
+  set(djv_lib_subdir bin)
+
+elseif (UNIX)
+
+  set(djv_lib_subdir lib)
+
+endif (WIN32)
+
+# Library prefix and suffix.
+
+if (BUILD_SHARED_LIBS)
+
+  set(
+    djv_lib_prefix
+    ${djv_build_dir}/${djv_lib_subdir}/${CMAKE_SHARED_LIBRARY_PREFIX}
+  )
+  
+  set(
+    djv_lib_suffix
+    ${CMAKE_SHARED_LIBRARY_SUFFIX}
+  )
+
+else (BUILD_SHARED_LIBS)
+
+  set(
+    djv_lib_prefix
+    ${djv_build_dir}/${djv_lib_subdir}/${CMAKE_STATIC_LIBRARY_PREFIX}
+  )
+  
+  set(
+    djv_lib_suffix
+    ${CMAKE_STATIC_LIBRARY_SUFFIX}
+  )
+
+endif (BUILD_SHARED_LIBS)
+
+# Prefix and suffix for linking to libraries.
+
+if (WIN32)
+
+  set(
+    djv_link_prefix
+    ${djv_build_dir}/lib/${CMAKE_IMPORT_LIBRARY_PREFIX}
+  )
+  
+  set(
+    djv_link_suffix
+    ${CMAKE_IMPORT_LIBRARY_SUFFIX}
+  )
+  
+elseif (UNIX)
+
+  if (BUILD_SHARED_LIBS)
+  
+    set(
+      djv_link_prefix
+      ${djv_build_dir}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}
+    )
+    
+    set(
+      djv_link_suffix
+      ${CMAKE_SHARED_LIBRARY_SUFFIX}
+    )
+
+  else (BUILD_SHARED_LIBS)
+  
+    set(
+      djv_link_prefix
+      ${djv_build_dir}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}
+    )
+    
+    set(
+      djv_link_suffix
+      ${CMAKE_STATIC_LIBRARY_SUFFIX}
+    )
+
+  endif (BUILD_SHARED_LIBS)
+  
+endif (WIN32)
+
+# Rutime library path (rpath).
+
+if (WIN32)
+
+elseif (APPLE)
+
+elseif (UNIX)
+
+  set(djv_install_rpath lib bin)
+
+  if (CPACK_PACKAGING_INSTALL_PREFIX)
+
+    set(
+      djv_install_rpath
+      ${djv_install_rpath}
+      ${CPACK_PACKAGING_INSTALL_PREFIX}/lib
+      ${CPACK_PACKAGING_INSTALL_PREFIX}/bin
+    )
+
+  endif (CPACK_PACKAGING_INSTALL_PREFIX)
+
+  if (CMAKE_INSTALL_PREFIX)
+
+    set(
+      djv_install_rpath
+      ${djv_install_rpath}
+      ${CMAKE_INSTALL_PREFIX}/lib
+      ${CMAKE_INSTALL_PREFIX}/bin
+    )
+
+  endif (CMAKE_INSTALL_PREFIX)
+
+endif (WIN32)
+
+#message("djv_install_rpath = "${djv_install_rpath})
+
+#-------------------------------------------------------------------------------
+# General
+#-------------------------------------------------------------------------------
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${djv_build_dir}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${djv_build_dir}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${djv_build_dir}/bin)
+
+include_directories(
+  ${PROJECT_SOURCE_DIR}/lib
+  ${PROJECT_BINARY_DIR}
+)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software
+#-------------------------------------------------------------------------------
+
+if (djv_third_party)
+
+  set(CMAKE_INCLUDE_PATH ${djv_build_dir}/include)
+  set(CMAKE_LIBRARY_PATH ${djv_build_dir}/lib)
+  set(CMAKE_PROGRAM_PATH ${djv_build_dir}/bin)
+
+endif (djv_third_party)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, X11
+#-------------------------------------------------------------------------------
+
+if (UNIX)
+
+  if (NOT APPLE)
+  
+    include(FindX11)
+    
+    set(X11_INCLUDE_DIR ${X11_INCLUDE_DIR} ${X11_Xpm_INCLUDE_PATH})
+    set(X11_LIBRARIES ${X11_LIBRARIES} ${X11_Xpm_LIB})
+
+    #message("X11 lib = "${X11_LIBRARIES})
+
+  endif (NOT APPLE)
+
+endif (UNIX)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, OpenGL
+#-------------------------------------------------------------------------------
+
+include(FindOpenGL)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, GLEW
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party glew djv_third_party_glew)
+
+if (djv_third_party_glew)
+
+  if (djv_third_party_use_system)
+
+    # XXX
+
+    set(
+      GLEW_INCLUDE_DIR
+      /usr/include/GL
+    )
+  
+    find_library(GLEW_LIBRARIES GLEW)
+  
+  else (djv_third_party_use_system)
+  
+    set(
+      GLEW_INCLUDE_DIR
+      ${djv_build_dir}/include
+    )
+  
+    if (WIN32)
+
+      set(
+        GLEW_LIBRARIES
+        ${djv_link_prefix}glew${djv_link_suffix}
+      )
+    
+    elseif (UNIX)
+  
+      set(
+        GLEW_LIBRARIES
+        ${djv_link_prefix}GLEW${djv_link_suffix}
+      )
+
+    endif (WIN32)
+  
+  endif (djv_third_party_use_system)
+  
+endif (djv_third_party_glew)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, zlib
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party zlib djv_third_party_zlib)
+
+if (djv_third_party_zlib)
+
+  if (djv_third_party_use_system)
+
+    include(FindZLIB)
+  
+  else (djv_third_party_use_system)
+  
+    set(
+      ZLIB_INCLUDE_DIR
+      ${djv_build_dir}/include
+    )
+
+    if (WIN32)
+
+      set(
+        ZLIB_LIBRARIES
+        ${djv_link_prefix}zlib${djv_link_suffix}
+      )
+  
+    elseif (UNIX)
+
+      set(
+        ZLIB_LIBRARIES
+        ${djv_link_prefix}z${djv_link_suffix}
+      )
+  
+    endif (WIN32)
+  
+  endif (djv_third_party_use_system)
+
+endif (djv_third_party_zlib)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, libjpeg
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party libjpeg djv_third_party_libjpeg)
+
+if (djv_third_party_libjpeg)
+
+  if (djv_third_party_use_system)
+  
+    include(FindJPEG)
+
+  else (djv_third_party_use_system)
+
+    set(
+      JPEG_INCLUDE_DIR
+      ${djv_build_dir}/include
+    )
+  
+    set(
+      JPEG_LIBRARIES
+      ${djv_link_prefix}jpeg${djv_link_suffix}
+    )
+
+  endif (djv_third_party_use_system)
+  
+endif (djv_third_party_libjpeg)
+
+#message(STATUS "JPEG_INCLUDE_DIR = "${JPEG_INCLUDE_DIR})
+#message(STATUS "JPEG_LIBRARIES = "${JPEG_LIBRARIES})
+
+if (JPEG_LIBRARIES)
+
+  DJV_FIND_APPEND(djv_build_plugin djv_jpeg _djv_build_plugin)
+
+endif (JPEG_LIBRARIES)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, libpng
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party libpng djv_third_party_libpng)
+
+if (djv_third_party_libpng)
+
+  if (djv_third_party_use_system)
+
+    DJV_PKG_CONFIG(
+      libpng
+      PNG_INCLUDE_DIR
+      PNG_LIBRARIES
+    )
+
+    #include(FindPNG)
+
+  else (djv_third_party_use_system)
+  
+    set(
+      PNG_INCLUDE_DIR
+      ${djv_build_dir}/include/libpng12
+    )
+
+    if (WIN32)
+  
+      set(
+        PNG_LIBRARIES
+        ${djv_link_prefix}png${djv_link_suffix}
+      )
+
+    elseif (UNIX)
+
+      set(
+        PNG_LIBRARIES
+        ${djv_link_prefix}png12${djv_link_suffix}
+      )
+
+    endif (WIN32)
+
+  endif (djv_third_party_use_system)
+
+endif (djv_third_party_libpng)
+
+if (PNG_LIBRARIES)
+
+  DJV_FIND_APPEND(djv_build_plugin djv_png _djv_build_plugin)
+
+endif (PNG_LIBRARIES)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, libtiff
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party libtiff djv_third_party_libtiff)
+
+if (djv_third_party_libtiff)
+
+  if (djv_third_party_use_system)
+
+    include(FindTIFF)
+  
+  else (djv_third_party_use_system)
+
+    set(
+      TIFF_INCLUDE_DIR
+      ${djv_build_dir}/include
+    )
+  
+    set(
+      TIFF_LIBRARIES
+      ${djv_link_prefix}tiff${djv_link_suffix}
+    )
+    
+  endif (djv_third_party_use_system)
+
+endif (djv_third_party_libtiff)
+
+if (TIFF_LIBRARIES)
+
+  DJV_FIND_APPEND(djv_build_plugin djv_tiff _djv_build_plugin)
+
+endif (TIFF_LIBRARIES)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, QuickTime
+#-------------------------------------------------------------------------------
+
+if (WIN32)
+
+  set(
+    QUICKTIME_INCLUDE_DIR
+    "C:\\Program Files\\QuickTime SDK\\CIncludes"
+  )
+  
+  set(
+    QUICKTIME_LIBRARIES
+    "C:\\Program Files\\QuickTime SDK\\Libraries\\QTMLClient.lib"
+  )
+  
+elseif (APPLE)
+
+  set(
+    QUICKTIME_LIBRARIES
+    /System/Library/Frameworks/QuickTime.framework
+    /System/Library/Frameworks/CoreAudio.framework
+    /System/Library/Frameworks/Carbon.framework
+  )
+
+elseif (UNIX)
+
+  DJV_FIND(djv_third_party libquicktime djv_third_party_libquicktime)
+
+  if (djv_third_party_libquicktime)
+  
+    if (djv_third_party_use_system)
+
+      DJV_PKG_CONFIG(
+        libquicktime
+        QUICKTIME_INCLUDE_DIR
+        QUICKTIME_LIBRARIES
+      )
+    
+    else (djv_third_party_use_system)
+    
+      set(DJV_THIRD_PARTY_LIBQUICKTIME true)
+    
+      set(
+        QUICKTIME_INCLUDE_DIR
+        ${djv_build_dir}/include/lqt
+        ${ZLIB_INCLUDE_DIR}
+      )
+    
+      set(
+        QUICKTIME_LIBRARIES
+        ${djv_link_prefix}quicktime${djv_link_suffix}
+        pthread
+        m
+        ${ZLIB_LIBRARIES}
+        dl
+      )
+    
+    endif (djv_third_party_use_system)
+  
+  endif (djv_third_party_libquicktime)
+
+endif (WIN32)
+
+#message("DJV_THIRD_PARTY_LIBQUICKTIME = "${DJV_THIRD_PARTY_LIBQUICKTIME})
+
+if (QUICKTIME_LIBRARIES)
+
+  if (APPLE OR WIN32)
+
+    DJV_FIND_APPEND(djv_build_plugin djv_quicktime _djv_build_plugin)
+
+  else (APPLE OR WIN32)
+
+    DJV_FIND_APPEND(djv_build_plugin djv_libquicktime _djv_build_plugin)
+
+  endif (APPLE OR WIN32)
+
+endif (QUICKTIME_LIBRARIES)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, FLTK
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party fltk djv_third_party_fltk)
+
+if (djv_third_party_fltk)
+
+  if (djv_third_party_use_system)
+  
+    include(FindFLTK)
+
+  else (djv_third_party_use_system)
+
+    set(
+      FLTK_INCLUDE_DIR
+      ${djv_build_dir}/include
+    )
+  
+    set(fltk_base_lib_name fltk)
+    
+    # XXX Conform library names:
+    
+    if (WIN32)
+  
+      set(fltk_gl_lib_name fltkgl)
+      set(fltk_images_lib_name fltkimages)
+  
+    elseif (UNIX)
+  
+      set(fltk_gl_lib_name fltk_gl)
+      set(fltk_images_lib_name fltk_images)
+  
+    endif (WIN32)
+  
+    set(
+      FLTK_BASE_LIBRARY
+      ${djv_link_prefix}${fltk_base_lib_name}${djv_link_suffix}
+    )
+    set(
+      FLTK_GL_LIBRARY
+      ${djv_link_prefix}${fltk_gl_lib_name}${djv_link_suffix}
+    )
+    set(
+      FLTK_IMAGES_LIBRARY
+      ${djv_link_prefix}${fltk_images_lib_name}${djv_link_suffix}
+    )
+    
+    if (WIN32)
+  
+      set(
+        FLTK_LIBRARY
+        ${FLTK_BASE_LIBRARY}
+        ${FLTK_GL_LIBRARY}
+  #      ${FLTK_IMAGES_LIBRARY}
+      )
+    
+    elseif (UNIX)
+  
+      set(
+        FLTK_LIBRARY
+        ${FLTK_BASE_LIBRARY}
+        ${FLTK_GL_LIBRARY}
+        ${FLTK_IMAGES_LIBRARY}
+      )
+    
+    endif (WIN32)
+
+  endif (djv_third_party_use_system)
+  
+endif (djv_third_party_fltk)
+
+if (FLTK_LIBRARY)
+
+  if (WIN32)
+  
+    add_definitions(-DFL_DLL)
+    
+  endif (WIN32)
+
+endif (FLTK_LIBRARY)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, OpenEXR
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party ilmbase djv_third_party_ilmbase)
+DJV_FIND(djv_third_party openexr djv_third_party_openexr)
+
+if (djv_third_party_ilmbase)
+  
+  if (djv_third_party_use_system)
+
+    DJV_PKG_CONFIG(
+      IlmBase
+      ILMBASE_INCLUDE_DIR
+      ILMBASE_LIBRARIES
+    )
+  
+  else (djv_third_party_use_system)
+  
+    set(
+      ILMBASE_INCLUDE_DIR
+      ${djv_build_dir}/include/OpenEXR
+    )
+  
+    set(
+      ILMBASE_LIBRARIES
+      ${djv_link_prefix}Imath${djv_link_suffix}
+      ${djv_link_prefix}Half${djv_link_suffix}
+      ${djv_link_prefix}Iex${djv_link_suffix}
+      ${djv_link_prefix}IlmThread${djv_link_suffix}
+    )
+    
+    if (UNIX)
+  
+      set(
+        ILMBASE_LIBRARIES
+        ${ILMBASE_LIBRARIES}
+        pthread
+      )
+  
+    endif (UNIX)
+
+  endif (djv_third_party_use_system)
+  
+endif (djv_third_party_ilmbase)
+
+if (djv_third_party_openexr)
+
+  if (djv_third_party_use_system)
+
+    DJV_PKG_CONFIG(
+      OpenEXR
+      OPENEXR_INCLUDE_DIR
+      OPENEXR_LIBRARIES
+    )
+  
+  else (djv_third_party_use_system)
+
+    set(
+      OPENEXR_INCLUDE_DIR
+      ${djv_build_dir}/include/OpenEXR
+      ${ZLIB_INCLUDE_DIR}
+    )
+  
+    set(
+      OPENEXR_LIBRARIES
+      ${djv_link_prefix}IlmImf${djv_link_suffix}
+      ${djv_link_prefix}Imath${djv_link_suffix}
+      ${djv_link_prefix}Half${djv_link_suffix}
+      ${djv_link_prefix}Iex${djv_link_suffix}
+      ${djv_link_prefix}IlmThread${djv_link_suffix}
+      ${ZLIB_LIBRARIES}
+    )
+  
+    if (UNIX)
+  
+      set(
+        OPENEXR_LIBRARIES
+        ${OPENEXR_LIBRARIES}
+        pthread
+      )
+    
+    endif (UNIX)
+  
+  endif (djv_third_party_use_system)
+    
+endif (djv_third_party_openexr)
+
+#message(STATUS "ILMBASE_INCLUDE_DIR = "${ILMBASE_INCLUDE_DIR})
+#message(STATUS "ILMBASE_LIBRARIES = "${ILMBASE_LIBRARIES})
+
+#message(STATUS "OPENEXR_INCLUDE_DIR = "${ILMBASE_INCLUDE_DIR})
+#message(STATUS "OPENEXR_LIBRARIES = "${ILMBASE_LIBRARIES})
+
+if (OPENEXR_LIBRARIES)
+
+  add_definitions(-DDJV_OPENEXR)
+  
+  if (WIN32)
+  
+    add_definitions(-DOPENEXR_DLL)
+    
+  endif (WIN32)
+
+  DJV_FIND_APPEND(djv_build_plugin djv_openexr _djv_build_plugin)
+
+endif (OPENEXR_LIBRARIES)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, VLUT
+#-------------------------------------------------------------------------------
+
+if (WIN32)
+
+  set(
+    VLUT_LIBRARIES
+    gdi32
+  )
+
+elseif (UNIX)
+
+  set(
+    VLUT_INCLUDE_DIR
+    ${X11_INCLUDE_DIR}
+  )
+  
+  set(
+    VLUT_LIBRARIES
+    ${X11_LIBRARIES}
+    -lXxf86vm
+  )
+
+endif (WIN32)
+
+if (VLUT_LIBRARIES)
+  
+  DJV_FIND_APPEND(djv_build_plugin djv_vlut _djv_build_plugin)
+
+endif (VLUT_LIBRARIES)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, PortAudio
+#-------------------------------------------------------------------------------
+
+DJV_FIND(djv_third_party portaudio djv_third_party_portaudio)
+
+if (djv_third_party_portaudio)
+
+  if (djv_third_party_use_system)
+
+    DJV_PKG_CONFIG(
+      PortAudio
+      PORTAUDIO_INCLUDE_DIR
+      PORTAUDIO_LIBRARIES
+    )
+  
+  else (djv_third_party_use_system)
+
+    set(
+      PORTAUDIO_INCLUDE_DIR
+      ${djv_build_dir}/include
+    )
+  
+    set(
+      PORTAUDIO_LIBRARIES
+      ${djv_link_prefix}portaudio${djv_link_suffix}
+    )
+    
+    if (WIN32)
+
+      set(PORTAUDIO_LIBRARIES ${PORTAUDIO_LIBRARIES} winmm)
+    
+    elseif (APPLE)
+      
+      set(
+        PORTAUDIO_LIBRARIES
+        ${PORTAUDIO_LIBRARIES}
+        "-framework CoreAudio"
+        "-framework AudioToolbox"
+        "-framework AudioUnit"
+        "-framework Carbon"
+      )
+    
+    else (WIN32)
+    
+      set(PORTAUDIO_LIBRARIES ${PORTAUDIO_LIBRARIES} asound rt)
+    
+    endif (WIN32)
+  
+  endif (djv_third_party_use_system)
+  
+endif (djv_third_party_portaudio)
+
+#-------------------------------------------------------------------------------
+# Third-Party Software, Qt
+#-------------------------------------------------------------------------------
+
+#DJV_FIND(djv_third_party qt djv_third_party_qt)
+#
+#if (djv_third_party_qt)
+#
+#  if (djv_third_party_use_system)
+#  
+#    include(FindQt4)
+#
+#  else (djv_third_party_use_system)
+#
+#    include(FindQt4)
+#
+#  endif (djv_third_party_use_system)
+#
+#endif (djv_third_party_qt)
+
+#-------------------------------------------------------------------------------
+# Configure File
+#-------------------------------------------------------------------------------
+
+configure_file(
+  ${PROJECT_SOURCE_DIR}/config.h.in
+  ${PROJECT_BINARY_DIR}/config.h
+  @ONLY
+)
+
+#-------------------------------------------------------------------------------
+# Dependencies
+#
+# * djv_base
+# * djv_image
+# * djv_ui
+#-------------------------------------------------------------------------------
+
+set(
+  djv_base_inc
+  ${djv_build_dir}/include
+  ${FLTK_INCLUDE_DIR}
+#  ${QT_QTCORE_INCLUDE_DIR}
+)
+
+set(
+  djv_image_inc
+  ${djv_build_dir}/include
+  ${FLTK_INCLUDE_DIR}
+#  ${QT_QTCORE_INCLUDE_DIR}
+  ${ILMBASE_INCLUDE_DIR}
+  ${GLEW_INCLUDE_DIR}
+  ${OPENGL_INCLUDE_DIR}
+)
+
+set(
+  djv_ui_inc
+  ${djv_build_dir}/include
+  ${FLTK_INCLUDE_DIR}
+#  ${QT_QTGUI_INCLUDE_DIR}
+  ${ILMBASE_INCLUDE_DIR}
+  ${GLEW_INCLUDE_DIR}
+  ${OPENGL_INCLUDE_DIR}
+)
+
+set(
+  _djv_base_lib
+  ${FLTK_BASE_LIBRARY}
+#  ${QT_QTCORE_LIBRARY}
+)
+
+if (WIN32)
+
+  # XXX
+  
+  set(_djv_link_prefix ${djv_link_prefix}${CMAKE_CFG_INTDIR}/)
+
+elseif (UNIX)
+
+  set(_djv_link_prefix ${djv_link_prefix})
+
+endif (WIN32)
+
+set(
+  djv_base_lib
+  ${_djv_link_prefix}djv_base${djv_link_suffix}
+  ${_djv_base_lib}
+)
+
+set(
+  _djv_image_lib
+  ${djv_base_lib}
+  ${ILMBASE_LIBRARIES}
+  ${GLEW_LIBRARIES}
+  ${OPENGL_LIBRARIES}
+)
+
+set(
+  djv_image_lib
+  ${_djv_link_prefix}djv_image${djv_link_suffix}
+  ${_djv_image_lib}
+)
+
+if (WIN32)
+
+  set(
+    _djv_ui_lib
+    ${djv_image_lib}
+    ${FLTK_LIBRARY}
+    ${FLTK_GL_LIBRARY}
+#    ${QT_QTGUI_LIBRARY}
+#    ${QT_QTOPENGL_LIBRARY}
+  )
+
+elseif (UNIX)
+
+  set(
+    _djv_ui_lib
+    ${djv_image_lib}
+    ${FLTK_GL_LIBRARY}
+    ${FLTK_IMAGES_LIBRARY}
+#    ${QT_QTGUI_LIBRARY}
+#    ${QT_QTOPENGL_LIBRARY}
+  )
+
+endif (WIN32)
+
+set(
+  djv_ui_lib
+  ${_djv_link_prefix}djv_ui${djv_link_suffix}
+  ${_djv_ui_lib}
+)
+
+set(
+  djv_base_dep
+  djv_base
+)
+
+set(
+  djv_image_dep
+  djv_image
+  djv_base
+)
+
+set(
+  djv_ui_dep
+  djv_ui
+  djv_image
+  djv_base
+)
+
+#-------------------------------------------------------------------------------
+# CPack
+#-------------------------------------------------------------------------------
+
+set(CPACK_PACKAGE_VERSION_MAJOR ${djv_version_major})
+set(CPACK_PACKAGE_VERSION_MINOR ${djv_version_minor})
+set(CPACK_PACKAGE_VERSION_PATCH ${djv_version_patch})
+set(CPACK_PACKAGE_CONTACT http://djv.sourceforge.net)
+set(CPACK_PACKAGE_DESCRIPTION_FILE ${PROJECT_SOURCE_DIR}/README.txt)
+set(
+  CPACK_PACKAGE_DESCRIPTION_SUMMARY
+  "DJV Imaging provides professional movie playback software for use in film, "
+  "VFX, and computer animation."
+)
+set(
+  CPACK_PACKAGE_EXECUTABLES
+  djv_view "djv_view - Image and movie viewer"
+)
+set(CPACK_RESOURCE_FILE_LICENSE ${PROJECT_SOURCE_DIR}/LEGAL.txt)
+
+string(TOLOWER ${djv_system_name} _djv_system_name_lc)
+string(TOLOWER ${djv_system_processor} _djv_system_processor_lc)
+set(
+  CPACK_PACKAGE_FILE_NAME
+#  ${djv_version_name}_${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}
+  ${djv_version_name}_${_djv_system_name_lc}-${_djv_system_processor_lc}
+)
+
+#message("CPACK_PACKAGE_FILE_NAME = "${CPACK_PACKAGE_FILE_NAME})
+
+if (APPLE)
+
+  # XXX Temporary method to use the "install_name_tool" utility to fix library
+  # paths for packages; hoperfully this will be supported in CPack soon and we
+  # can remove all of this.
+  
+  set(
+    djv_osx_install_name
+    ${PROJECT_SOURCE_DIR}/etc/MacOS/install_name.csh
+  )
+
+  set(
+    djv_osx_package_dir
+    ${PROJECT_BINARY_DIR}/_CPack_Packages/Darwin/Bundle/${CPACK_PACKAGE_FILE_NAME}
+  )
+  set(
+    djv_osx_package_app_dir
+    ${djv_osx_package_dir}/${djv_version_name}.app
+  )
+
+  #message("djv_osx_package_dir = "${djv_osx_package_dir})
+
+  macro(DJV_OSX_INSTALL_BIN INPUT)
+    set(
+      _TMP
+      ${djv_osx_package_app_dir}/Contents/Resources/bin/${INPUT}
+    )
+    install(
+      CODE
+      "execute_process(COMMAND ${djv_osx_install_name} ${_TMP} ${PROJECT_BINARY_DIR})"
+    )
+  endmacro(DJV_OSX_INSTALL_BIN)
+
+  macro(DJV_OSX_INSTALL_LIB INPUT)
+    set(
+      _TMP
+      ${djv_osx_package_app_dir}/Contents/Resources/lib/lib${INPUT}.dylib
+    )
+    install(
+      CODE
+      "execute_process(COMMAND ${djv_osx_install_name} ${_TMP} ${PROJECT_BINARY_DIR})"
+    )
+  endmacro(DJV_OSX_INSTALL_LIB)
+
+  macro(DJV_OSX_INSTALL_PLUGIN INPUT)
+    set(
+      _TMP
+      ${djv_osx_package_app_dir}/Contents/Resources/lib/lib${INPUT}.so
+    )
+    install(
+      CODE
+      "execute_process(COMMAND ${djv_osx_install_name} ${_TMP} ${PROJECT_BINARY_DIR})"
+    )
+  endmacro(DJV_OSX_INSTALL_PLUGIN)
+
+  macro(DJV_OSX_INSTALL_LINK INPUT)
+    set(
+      _TMP
+      ${djv_version_name}.app/Contents/Resources/${INPUT}
+    )
+    install(
+      CODE
+      "execute_process(COMMAND ${ln} ${_TMP} ${djv_osx_package_dir})"
+    )
+  endmacro(DJV_OSX_INSTALL_LINK)
+
+endif (APPLE)
+
+#-------------------------------------------------------------------------------
+# Sub-Directories
+#
+# * Third party software
+# * Libraries
+# * Plugins
+# * Programs
+# * Tests
+# * Documentation
+#-------------------------------------------------------------------------------
+
+if (djv_third_party)
+
+  foreach (i ${djv_third_party})
+    message(STATUS "Adding third party: "${i})
+    add_subdirectory(third_party/${i})
+  endforeach (i)
+
+endif (djv_third_party)
+
+foreach (i ${djv_build_lib})
+
+  message(STATUS "Adding library: "${i})
+  add_subdirectory(lib/${i})
+
+endforeach (i)
+
+foreach (i ${_djv_build_plugin})
+
+  message(STATUS "Adding plugin: "${i})
+  add_subdirectory(plugin/${i})
+
+endforeach (i)
+
+foreach (i ${djv_build_bin})
+
+  message(STATUS "Adding program: "${i})
+  add_subdirectory(bin/${i})
+
+endforeach (i)
+
+foreach (i ${djv_build_test})
+
+  message(STATUS "Adding test: "${i})
+  add_subdirectory(tests/${i})
+
+endforeach (i)
+
+add_subdirectory(doc)
+
+include(CPack)

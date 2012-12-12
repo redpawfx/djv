@@ -1,0 +1,171 @@
+<!--  ---------------------------------------------------------------------  -->
+
+HEADER(Installation, doc.html)
+
+<tr>
+<td>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<h2>Installation</h2>
+
+<p>Contents:</p>
+<ul>
+  <li><a href="#general">General</a></li>
+  <li><a href="#linux">Linux</a></li>
+  <li><a href="#macos">Mac OS</a></li>
+  <li><a href="#solaris">Solaris</a></li>
+  <li><a href="#windows">Windows</a></li>
+  <li><a href="#trouble-shooting">Trouble-Shooting</a></li>
+  <li><a href="#errata">Errata</a></li>
+</ul>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="general"><h2><u>General</u></h2></a>
+
+<p>General installation steps:</p>
+
+<ul> 
+  <li>Check the requirements for your operating system</li>
+  <li>Download the appropriate package for your operating system
+  (<a href="download.html">Downloads</a>)</li>
+  <li>Install the package</li>
+  <li>Add the installation directory to your search path</li>
+</ul>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="linux"><h2><u>Linux</u></h2></a>
+
+<p><b>Requirements:</b></p>
+<ul>
+  <li><a href="http://www.centos.org">CentOS 4.7</a></li>
+  <li><a href="http://www.ubuntu.com">Ubuntu 8.04</a></li>
+</ul>
+
+<br>
+
+<p><b>Install:</b></p>
+<p>Debian package install (requires root permissions):</p>
+<pre>
+> sudo dpkg -i djv_0.8.2_linux-x86.deb
+</pre>
+<p>RPM package install (requires root permissions):</p>
+<pre>
+> sudo rpm -iv djv-0.8.2_linux-x86.rpm
+</pre>
+
+<br>
+
+<p><b>Post-install:</b></p>
+<p>Add the installation directory to your search path.</p>
+<p>Default installation directory: /usr/local/djv</p>
+<p>C Shell ($HOME/.cshrc):</p>
+<pre>
+setenv PATH ${PATH}:/usr/local/djv/bin
+</pre>
+<p>Bourne shell ($HOME/.profile):</p>
+<pre>
+export PATH=$PATH:/usr/local/djv/bin
+</pre>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="macos"><h2><u>Mac OS</u></h2></a>
+
+<p>Requirements:</p>
+<ul>
+  <li><a href="http://www.apple.com/macosx">Apple Mac OS 10.5</a></li>
+</ul>
+
+<br>
+
+<p>Open the disk image and copy the DJV package to where you would like to
+install it (a link to the Applications directory is provided as a shortcut).</p>
+
+<br>
+ 
+<p>To use the command-line utilities, add the installation directory to your
+search path.</p>
+<p>C Shell ($HOME/.cshrc):</p>
+<pre>
+setenv PATH ${PATH}:/Applications/djv-0.8.2.app/Contents/Resources/bin
+</pre>
+<p>Bourne shell ($HOME/.profile):</p>
+<pre>
+export PATH=$PATH:/Applications/djv-0.8.2.app/Contents/Resources/bin
+</pre>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="solaris"><h2><u>Solaris</u></h2></a>
+
+<p>Requirements:</p>
+<ul>
+  <li><a href="http://www.sun.com/solaris">Sun Solaris 10</a></li>
+</ul>
+
+<br>
+
+<p>Install the package (requires root permissions):</p>
+<pre>
+# gunzip djv-0.8.2_solaris-x86.gz
+# pkgadd -d djv-0.8.2_solaris-x86
+</pre>
+
+<br>
+
+<p>Add the installation directory to your search path:</p>
+
+<p>Default installation directory: /opt/djv</p>
+
+<p>C Shell ($HOME/.cshrc):</p>
+<pre>
+setenv PATH ${PATH}:/opt/djv/bin
+</pre>
+
+<p>Bourne shell ($HOME/.profile):</p>
+<pre>
+export PATH=$PATH:/opt/djv/bin
+</pre>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="windows"><h2><u>Windows</u></h2></a>
+
+<p>Requirements:</p>
+<ul>
+  <li><a href="http://www.microsoft.com/windows">Microsoft Windows XP SP/2</a>
+  </li>
+</ul>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="errata"><h2><u>Errata</u></h2></a>
+
+<p>The OpenGL 1.2 renderer does not support the following features:</p>
+<ul>
+<li>Floating-point images.</li>
+<li>Image rotation.</li>
+<li>Image filters.</li>
+</ul>
+
+<p>OpenEXR:<p>
+<ul>
+<li>OpenGL 2.0 is required for floating-point image support.</li>
+</ul>
+
+<!--  ---------------------------------------------------------------------  -->
+
+</td>
+</tr>
+
+FOOTER(doc.html)
+

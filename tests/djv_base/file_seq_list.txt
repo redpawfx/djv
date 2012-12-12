@@ -1,0 +1,11 @@
+//framestore/Character_E27_A001_P010.rgba.0420.tif
+//framestore/Character_E27_A001_P010.rgba.0421.tif
+//framestore/Character_E27_A001_P010.rgba.0422.tif
+//framestore/V1/Character_E27_A001_P010.rgba.0423.tif
+//framestore/V3/Character_E27_A001_P010.rgba.0424.tif
+//framestore/V3/Character_E27_A001_P010.rgba.0425.tif
+//framestore/V3/Character_E27_A001_P010.rgba.0426.tif
+//framestore/V32/Character_E27_A004_P010.rgba.0454.tif
+//framestore/V32/Character_E27_A004_P010.rgba.0455.tif
+//framestore/V32/Character_E27_A004_P010.rgba.0456.tif
+//framestore/V32/Character_E27_A004_P010.rgba.tif

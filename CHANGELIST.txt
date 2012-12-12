@@ -1,0 +1,35 @@
+--------------------------------------------------------------------------------
+ DJV Imaging - CHANGELIST
+ 
+--------------------------------------------------------------------------------
+ 0.8.3-pre2
+ 
+ * Bug fix for file sequences.
+ * Bug fix for Mac OS PNG support.
+
+ djv_view:
+
+ * Frame controls now pause playback during interaction instead of stopping it.
+ * Changed default shortcuts for image channels to be 'r', 'g', 'b', and 'a'.
+   Press the shortcut a second time to return to the default channel display.
+ * Changed default shortcuts for tools to be '1', '2', '3', etc.
+ * Removed some minor default shortcuts (these are still user-definable in the
+   preferences).
+ 
+ Developer:
+ 
+ * Improvements to static libary support.
+
+--------------------------------------------------------------------------------
+ 0.8.3-pre1
+ 
+ * Increased frame number size limits.
+ * Compilation fixes for Ubuntu 9.04.
+ * Updated screenshots credits.
+ * Added an option to use a single-click or double-click for changing
+   directories in the file browser.
+ 
+ djv_view:
+
+ * Added playback toolbar layout options.
+

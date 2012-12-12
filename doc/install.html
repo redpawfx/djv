@@ -1,0 +1,247 @@
+
+
+
+
+
+
+
+<!--  ---------------------------------------------------------------------  -->
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>DJV Imaging - Installing the Software</title>
+</head>
+<body>
+<div>
+<table class="nav">
+<tr>
+  <td align="left"><a href="index.html"><img src="logo.gif"></a></td>
+  <td align="right">
+  <p class="nav"><a class="nav" href="doc.html">Up</a> |
+  <a class="nav" href="index.html">Home</a></p>
+  </td>
+</tr>
+</table>
+</div>
+<div>
+<table class="body" cellpadding="10">
+
+
+<tr>
+<td>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<h2>Installing the Software</h2>
+
+<ul>
+  <li><a href="#macos">Apple Mac OS</a></li>
+  <li><a href="#linux">Linux</a></li>
+  <li><a href="#windows">Microsoft Windows</a></li>
+  <li><a href="#solaris">Sun Solaris</a></li>
+</ul>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="macos"><h2>Apple Mac OS</h2></a>
+
+<h3>Requirements</h3>
+<ul>
+  <li><a href="http://www.apple.com/macosx">Apple Mac OS 10.5</a></li>
+</ul>
+
+<h3>Download</h3>
+<table border=1>
+<tr><th align=left>32-bit</th></tr>
+<tr>
+  <td>
+  <a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.2_macos-x86.dmg/download">djv-0.8.2_macos-x86.dmg</a>
+  </td>
+</tr>
+</table>
+
+<h3>Install</h3>
+<p>Open the disk image and copy the package to where you would like to install
+it (a link to the Applications directory is provided as a shortcut).</p>
+
+<h3>Post-Install</h3>
+<p>To use the command-line utilities add the install directory to your search
+path.</p>
+<p>Example C Shell ($HOME/.cshrc):</p>
+<pre>
+setenv PATH ${PATH}:/Applications/djv-0.8.2.app/Contents/Resources/bin
+</pre>
+<p>Example Bourne shell ($HOME/.profile):</p>
+<pre>
+export PATH=$PATH:/Applications/djv-0.8.2.app/Contents/Resources/bin
+</pre>
+
+<h3>Uninstall</h3>
+<p>Delete the package from where you installed it.</p>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="linux"><h2>Linux</h2></a>
+
+<h3>Requirements</h3>
+<ul>
+  <li><a href="http://www.centos.org">CentOS 4.7</a></li>
+  <li><a href="http://www.ubuntu.com">Ubuntu 8.04</a></li>
+</ul>
+
+<h3>Download</h3>
+<table border=1>
+<tr><th></th><th align=left>32-bit</th><th align=left>64-bit</th></tr>
+<tr>
+  <th>Debian</th>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.2_linux-x86.deb/download">djv-0.8.2_linux-x86.deb</a></td>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.2_linux-x64.deb/download">djv-0.8.2_linux-x64.deb</a></td>
+</tr>
+<tr>
+  <th>RPM</th>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.2_linux-x86.rpm/download">djv-0.8.2_linux-x86.rpm</a></td>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.2_linux-x64.rpm/download">djv-0.8.2_linux-x64.rpm</a></td>
+</tr>
+<tr>
+  <th>Tar</th>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.2_linux-x86.tar.gz/download">djv-0.8.2_linux-x86.tar.gz</a></td>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.2_linux-x64.tar.gz/download">djv-0.8.2_linux-x64.tar.gz</a></td>
+</tr>
+</table>
+
+<h3>Install</h3>
+<p>Note that installing the software requires root permissions.</p>
+<p>Example Debian package install:</p>
+<pre>
+> sudo dpkg -i djv_0.8.2_linux-x86.deb
+</pre>
+<p>Example RPM package install:</p>
+<pre>
+> sudo rpm -iv djv-0.8.2_linux-x86.rpm
+</pre>
+
+<h3>Post-Install</h3>
+<p>Add the install directory to your search path.</p>
+<p>Default install directory: /usr/local/djv</p>
+<p>Example C Shell ($HOME/.cshrc):</p>
+<pre>
+setenv PATH ${PATH}:/usr/local/djv/bin
+</pre>
+<p>Example Bourne shell ($HOME/.profile):</p>
+<pre>
+export PATH=$PATH:/usr/local/djv/bin
+</pre>
+
+<h3>Uninstall</h3>
+<p>Example Debian package uninstall:</p>
+<pre>
+> sudo dpkg --purge djv
+</pre>
+<p>Example RPM package uninstall:</p>
+<pre>
+> sudo rpm -e djv
+</pre>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="windows"><h2>Microsoft Windows</h2></a>
+
+<h3>Requirements</h3>
+<ul>
+  <li><a href="http://www.microsoft.com/windows">Microsoft Windows XP SP/2</a>
+  </li>
+</ul>
+
+<h3>Download</h3>
+<table border=1>
+<tr><th></th><th align=left>32-bit</th><th align=left>64-bit</th></tr>
+<tr>
+  <th>Installer</th>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.3-pre2_winxp-x86.exe/download">djv-0.8.3-pre2_winxp-x86.exe</a></td>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.3-pre2_winxp-x64.exe/download">djv-0.8.3-pre2_winxp-x64.exe</a></td>
+</tr>
+<tr>
+  <th>ZIP</th>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.3-pre2_winxp-x86.zip/download">djv-0.8.3-pre2_winxp-x86.zip</a></td>
+  <td><a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.3-pre2_winxp-x64.zip/download">djv-0.8.3-pre2_winxp-x64.zip</a></td>
+</tr>
+</table>
+
+<!--  ---------------------------------------------------------------------  -->
+
+<br>
+<a name="solaris"><h2>Sun Solaris</h2></a>
+
+<h3>Requirements</h3>
+<ul>
+  <li><a href="http://www.sun.com/solaris">Sun Solaris 10</a></li>
+</ul>
+
+<h3>Download</h3>
+<table border=1>
+<tr><th align=left>32-bit</th><th align=left>64-bit</th></tr>
+<tr>
+  <td>
+  <a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.3-pre2_solaris-x86.gz/download">djv-0.8.3-pre2_solaris-x86.gz</a><br>
+  </td>
+  <td>
+  <a href="http://sourceforge.net/projects/djv/files/djv/djv-0.8.3-pre2_solaris-x64.gz/download">djv-0.8.3-pre2_solaris-x64.gz</a>
+  </td>
+</tr>
+</table>
+
+<h3>Install</h3>
+<p>Note that installing the software requires root permissions.</p>
+<p>Example install:</p>
+<pre>
+# gunzip djv-0.8.2_solaris-x86.gz
+# pkgadd -d djv-0.8.2_solaris-x86
+</pre>
+
+<h3>Post-Install</h3>
+<p>Add the install directory to your search path.</p>
+<p>Default install directory: /opt/djv</p>
+<p>Example C Shell ($HOME/.cshrc):</p>
+<pre>
+setenv PATH ${PATH}:/opt/djv/bin
+</pre>
+<p>Example Bourne shell ($HOME/.profile):</p>
+<pre>
+export PATH=$PATH:/opt/djv/bin
+</pre>
+
+<h3>Uninstall</h3>
+<p>Example uninstall:</p>
+<pre>
+# pkgrm djv
+</pre>
+
+<!--  ---------------------------------------------------------------------  -->
+
+</td>
+</tr>
+
+</table>
+</div>
+<div>
+<table class="nav">
+<tr>
+  <td align="center">
+  <p class="nav">Copyright (c) 2004-2009 Darby Johnston |
+  <a class="nav" href="legal.html">Legal Notices</a></p>
+  </td>
+  <td align="right">
+  <p class="nav"><a class="nav" href="doc.html">Up</a> |
+  <a class="nav" href="index.html">Home</a></p>
+  </td>
+</tr>
+</table>
+</div>
+</body>
+</html>
+
+

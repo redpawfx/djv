@@ -1,0 +1,95 @@
+/*------------------------------------------------------------------------------
+ doc/style.css
+
+ Copyright (c) 2004-2009 Darby Johnston
+ All rights reserved.
+ Use is subject to license terms.
+------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------
+| Basics
+*/
+
+* {
+  font-family: sans-serif;
+}
+
+body {
+  background: #333333;
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  font-size: 12px;
+  color: #ffffff;
+}
+
+table.body {
+  width: 100%;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  color: #000000;
+  background: #555555;
+}
+
+h1 { color: #ffffff; }
+h2 { color: #ffffff; }
+h3 { color: #ffffff; }
+h4 { color: #ffffff; }
+
+p {
+  font-size: 12px;
+  color: #ffffff;
+}
+
+pre, code {
+  font-size: 12px;
+  font-family: monospace;
+  color: #ffffff;
+}
+
+li {
+  font-size: 12px;
+  color: #ffffff;
+  list-style: disc;
+}
+
+a:link { color: #ccccff; }
+a:visited { color: #ccccff; }
+
+img.icon {
+  vertical-align: middle;
+}
+
+a img { border: none; }
+
+/*------------------------------------------------------------------------------
+| Navigation Bar
+*/
+
+table.nav {
+  width: 100%;
+  background: #333333;
+}
+
+p.nav {
+  font-size: 10px;
+  font-weight: bold;
+  color: #777777;
+}
+
+a.nav:link { color: #777777; }
+a.nav:visited { color: #777777; }
+
+/*------------------------------------------------------------------------------
+| Items
+*/
+
+p.item {
+  font-style: italic;
+}
+
+table.example {
+  background: #777777;
+}
