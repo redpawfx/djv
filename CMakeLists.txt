@@ -96,7 +96,7 @@ if (APPLE)
 
     #set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-arch i386")
     #set(djv_build_arch x86)
-    
+
     # Disable warnings from XPM files.
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings")
@@ -104,13 +104,13 @@ if (APPLE)
     # Disable warnings from printf/sprintf.
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security")
-    
+
 elseif (UNIX)
 
     if (CMAKE_COMPILER_IS_GNUCXX)
 
         # Enable 32-bit builds.
-  
+
         #set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-m32")
         #set(djv_build_arch x86)
 
@@ -123,10 +123,10 @@ elseif (UNIX)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security")
 
         # Profiling options.
-    
+
         #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg")
         #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
-    
+
     endif (CMAKE_COMPILER_IS_GNUCXX)
 
 elseif (WIN32)
@@ -157,7 +157,7 @@ if (APPLE)
 elseif (UNIX)
 
     include(FindX11)
-  
+
 endif (APPLE)
 
 # Set whether local or system versions of the software dependencies are used.
@@ -229,13 +229,13 @@ if (djv_glew_local)
         set(GLEW_LIBRARIES   ${djv_deps_dir}/lib/libglew32.a)
 
     else (WIN32)
-  
+
         set(GLEW_FOUND       true)
         set(GLEW_INCLUDE_DIR ${djv_deps_dir}/include)
         set(GLEW_LIBRARIES   -L${djv_deps_dir}/lib -lGLEW)
 
     endif (WIN32)
-  
+
 else (djv_glew_local)
 
     # \todo Write a CMake plugin for finding GLEW.
@@ -243,7 +243,7 @@ else (djv_glew_local)
     set(GLEW_FOUND       true)
     set(GLEW_INCLUDE_DIR /usr/include)
     set(GLEW_LIBRARIES   -L/usr/lib/x86_64-linux-gnu -lGLEW)
-  
+
 endif (djv_glew_local)
 
 #-------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ else (djv_libquicktime_local)
 
     # \todo Write a CMake plugin for finding libquicktime.
 
-    #set(LIBQUICKTIME_FOUND       true)
+    set(LIBQUICKTIME_FOUND       true)
     set(LIBQUICKTIME_INCLUDE_DIR /usr/include)
     set(LIBQUICKTIME_LIBRARIES   -lquicktime)
 
@@ -361,7 +361,7 @@ if (djv_portaudio_local)
             /System/Library/Frameworks/AudioToolBox.framework)
 
     elseif (UNIX)
-  
+
 #        set(PORTAUDIO_LIBRARIES ${PORTAUDIO_LIBRARIES} -ljack -lasound)
         set(PORTAUDIO_LIBRARIES ${PORTAUDIO_LIBRARIES}
             /usr/lib/x86_64-linux-gnu/libjack.so.0)
@@ -404,11 +404,11 @@ if (djv_png_local)
     set(PNG_FOUND        true)
     set(PNG_INCLUDE_DIRS ${djv_deps_dir}/include)
     set(PNG_LIBRARIES    -L${djv_deps_dir}/lib -lpng -lz)
-  
+
 else (djv_png_local)
 
     include(FindPNG)
-  
+
 endif (djv_png_local)
 
 if (PNG_FOUND)
@@ -426,19 +426,19 @@ endif (PNG_FOUND)
 if (WIN32)
 
     #set(QUICKTIME_FOUND true)
-  
+
     set(
         QUICKTIME_INCLUDE_DIR
         "C:\\Program Files\\QuickTime SDK\\CIncludes")
-  
+
     set(
         QUICKTIME_LIBRARIES
         "C:\\Program Files\\QuickTime SDK\\Libraries\\QTMLClient.lib")
-  
+
 elseif (APPLE)
 
     #set(QUICKTIME_FOUND true)
-  
+
     set(QUICKTIME_LIBRARIES
         /System/Library/Frameworks/QuickTime.framework
         /System/Library/Frameworks/CoreAudio.framework
@@ -586,7 +586,7 @@ if (WIN32)
     set(CPACK_NSIS_MUI_UNICON ${PROJECT_SOURCE_DIR}/etc/Windows/projector.ico)
 
     set(djv_bundle_name win)
-    
+
 elseif (APPLE)
 
     set(CPACK_GENERATOR Bundle)
@@ -599,12 +599,12 @@ elseif (APPLE)
     set(CPACK_PACKAGE_ICON ${PROJECT_SOURCE_DIR}/etc/OSX/djv.icns)
 
     set(djv_bundle_name osx)
-    
+
 elseif (UNIX)
 
     set(CPACK_GENERATOR DEB RPM TGZ)
     set(CPACK_PACKAGING_INSTALL_PREFIX /usr/local/djv)
-    
+
     set(djv_bundle_name linux)
     set(djv_install_rpath ${CPACK_PACKAGING_INSTALL_PREFIX}/lib)
 
