@@ -34,6 +34,8 @@
 #ifndef DJV_FILE_H
 #define DJV_FILE_H
 
+#include <sys/types.h>
+
 #include <djv_debug.h>
 #include <djv_seq.h>
 #include <djv_set.h>

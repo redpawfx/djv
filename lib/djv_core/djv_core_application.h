@@ -34,6 +34,8 @@
 #ifndef DJV_CORE_APPLICATION_H
 #define DJV_CORE_APPLICATION_H
 
+#include <sys/types.h>
+
 #include <djv_debug.h>
 #include <djv_error.h>
 #include <djv_string.h>

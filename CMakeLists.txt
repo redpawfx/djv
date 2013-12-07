@@ -39,7 +39,7 @@ project(djv)
 
 set(djv_version_major "0")
 set(djv_version_minor "9")
-set(djv_version_patch "0")
+set(djv_version_patch "1")
 
 set(djv_version_name
     djv-${djv_version_major}.${djv_version_minor}.${djv_version_patch})
@@ -239,10 +239,11 @@ if (djv_glew_local)
 else (djv_glew_local)
 
     # \todo Write a CMake plugin for finding GLEW.
+	# there is one now.. use it at some point 
 
     set(GLEW_FOUND       true)
     set(GLEW_INCLUDE_DIR /usr/include)
-    set(GLEW_LIBRARIES   -L/usr/lib/x86_64-linux-gnu -lGLEW)
+    set(GLEW_LIBRARIES   -L/usr/lib64 -lGLEW)
 
 endif (djv_glew_local)
 
@@ -263,7 +264,7 @@ else (djv_ilmbase_local)
 
     set(ILMBASE_FOUND       true)
     set(ILMBASE_INCLUDE_DIR /usr/include/OpenEXR)
-    set(ILMBASE_LIBRARIES   -L/usr/lib -lHalf -lIlmThread -lImath -lIex)
+    set(ILMBASE_LIBRARIES   -L/usr/lib64 -lHalf -lIlmThread -lImath -lIex)
 
 endif (djv_ilmbase_local)
 
@@ -305,7 +306,7 @@ else (djv_libquicktime_local)
 
     set(LIBQUICKTIME_FOUND       true)
     set(LIBQUICKTIME_INCLUDE_DIR /usr/include)
-    set(LIBQUICKTIME_LIBRARIES   -lquicktime)
+    set(LIBQUICKTIME_LIBRARIES   -L/usr/lib64 -lquicktime)
 
 endif (djv_libquicktime_local)
 
@@ -331,7 +332,7 @@ else (djv_openexr_local)
 
     set(OPENEXR_FOUND       true)
     set(OPENEXR_INCLUDE_DIR /usr/include/OpenEXR)
-    set(OPENEXR_LIBRARIES   -L/usr/lib -lIlmImf -lz)
+    set(OPENEXR_LIBRARIES   -L/usr/lib64 -lIlmImf -lz)
 
 endif (djv_openexr_local)
 
@@ -374,7 +375,7 @@ else (djv_portaudio_local)
 
     set(PORTAUDIO_FOUND       true)
     set(PORTAUDIO_INCLUDE_DIR /usr/include)
-    set(PORTAUDIO_LIBRARIES   -lportaudio)
+    set(PORTAUDIO_LIBRARIES  -L/usr/lib64 -lportaudio)
 
     if (WIN32)
 
@@ -389,7 +390,7 @@ else (djv_portaudio_local)
 
         #set(PORTAUDIO_LIBRARIES ${PORTAUDIO_LIBRARIES} -ljack -lasound)
         set(PORTAUDIO_LIBRARIES ${PORTAUDIO_LIBRARIES}
-            /usr/lib/x86_64-linux-gnu/libjack.so.0)
+            /usr/lib64/libjack.so.0 -lasound)
 
     endif (WIN32)
 

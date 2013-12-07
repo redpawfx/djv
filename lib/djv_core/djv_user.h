@@ -34,6 +34,8 @@
 #ifndef DJV_USER_H
 #define DJV_USER_H
 
+#include <sys/types.h>
+
 #include <djv_string.h>
 
 namespace djv
